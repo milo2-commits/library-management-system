@@ -45,6 +45,18 @@ export async function getCurrentUser() {
     return res.json()
 }
 
+// Get user profile details
+export async function getUserProfile() {
+  const res = await fetch(`${API_BASE}/profile/`, {
+    headers: getAuthHeader(),
+    credentials: 'include'
+  })
+  
+  if (!res.ok) throw new Error('Failed to fetch profile')
+
+  return res.json()
+}
+
 // Auto-refresh expired token
 export async function refreshToken() {
   const res = await fetch(`${API_BASE}/token/refresh/`, {

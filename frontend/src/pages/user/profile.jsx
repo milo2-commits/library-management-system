@@ -1,34 +1,62 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { getUserProfile } from "../../services/api";
+
 import ProfileCard from "../../components/Profile/ProfileCard";
 import InfoSection from "../../components/Profile/InfoSection";
 import BookHistory from "../../components/Profile/BookHistory";
 
 export default function UserProfile() {
+  const { currentUser } = useAuth(); // Get current user from context
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch profile data from backend
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const data = await getUserProfile();
+        setProfileData(data);
+      } catch (error) {
+        console.error("Failed to fetch profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (currentUser) {
+      fetchProfile();
+    }
+  }, [currentUser]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!profileData) return <div>No profile Data found</div>
+
   return (
     <div className="bg-linear-to-r from-gray-100 to-yellow-100 min-h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
         {/* LEFT SIDE */}
         <div className="lg:col-span-1 space-y-4">
 
-          <ProfileCard />
+          <ProfileCard userData={profileData}/>
 
           <InfoSection
             title="Account Information"
             data={[
-              ["Enrollment ID", "ENR-2023-0456"],
-              ["Email", "johnstone@college.edu"],
-              ["Phone", "9876543210"],
-              ["Year of Study", "3rd Year"],
+              ["Enrollment ID", profileData.enrollment_number || "N/A"],
+              ["Email", profileData.email || "N/A"],
+              ["Phone", profileData.phone_number || "N/A"],
+              ["Year of Study", profileData.batch || "N/A"],
             ]}
           />
 
           <InfoSection
             title="Academic Details"
             data={[
-              ["Course", "B.Tech Computer Science"],
-              ["Semester", "6th Semester"],
-              ["Section", "A"],
-              ["Attendance", "87%"],
+              ["Course", profileData.student_id || "N/A"],
+              ["Semester", profileData.department || "N/A"],
+              ["Section", profileData.father_name || "N/A"],
+              ["Attendance", profileData.mother_name || "N/A"],
             ]}
           />
 
