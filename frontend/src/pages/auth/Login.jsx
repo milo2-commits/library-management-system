@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext' // Kept your original context path
+import { useAuth } from '../../context/AuthContext' // Kept your original context path
 import { IdCard, Lock, AlertCircle, BookOpen, GraduationCap, Briefcase, ShieldCheck } from 'lucide-react'
-// import loginImage from "../../assets/signup-image.jpg"
+import loginImage from "../../assets/signup-image.jpg"
 
 export default function Login() {
   const [enrollmentNumber, setEnrollmentNumber] = useState('')
@@ -57,7 +57,7 @@ export default function Login() {
         {/* ── LEFT: Image panel ── */}
         <div className="relative w-full lg:w-[52%] overflow-hidden min-h-[300px]">
           <img
-            // src={loginImage}
+            src={loginImage}
             alt="Library"
             className="w-full h-full object-cover"
           />

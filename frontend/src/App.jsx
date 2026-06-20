@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import DashboardLayout from './components/layout/DashboardLayout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
-import Login from './pages/Login';
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 import Dashboard from './pages/user/Dashboard';
 import UserProfile from "./pages/user/profile";
 import Wishlist from "./pages/user/wishlist";
@@ -26,6 +27,7 @@ function AppRoutes() {
     <Routes>
       {/* ================= PUBLIC ROUTES ================= */}
       <Route path="/login" element={<Login />} />
+      <Route path='/register' element={<SignUp />} />
 
       {/* ================= GROUP 1: GENERAL USER ROUTES ================= */}
       {/* Leaving allowedRoles blank here means ANY logged-in account can access these hallways */}
